@@ -1,0 +1,220 @@
+\ProvidesPackage{poly}
+
+% ================================================================================
+% Packages
+% ================================================================================
+
+\RequirePackage{tikz}
+\RequirePackage{xcolor}
+
+\RequirePackage{amsmath}
+\RequirePackage{amssymb}
+\RequirePackage{amsfonts}
+\RequirePackage{amsthm}
+
+\RequirePackage{verbatim}
+\RequirePackage{hyperref}
+\RequirePackage{listings}
+
+% ================================================================================
+% Color Accents
+% ================================================================================
+
+\definecolor{primarygreen}   {HTML}{529234} % logo 原色
+\definecolor{secondarygreen} {HTML}{8BC34A} % 浅草绿
+\definecolor{darkgreen}      {HTML}{3B6E22} % 深绿用于强调
+\definecolor{greygreen}      {HTML}{5E7551} % 绿色中间层
+\definecolor{softgreen}      {HTML}{E1F0DA} % 背景色
+
+\setbeamercolor{title}					{fg=white}
+\setbeamercolor{author}					{fg=white}
+\setbeamercolor{date}					{fg=white}
+\setbeamercolor{institute}				{fg=white}
+\setbeamercolor{head}                   {bg=secondarygreen}
+
+\setbeamercolor{alerted text}           {fg=primarygreen}
+\setbeamercolor{structure}              {fg=primarygreen}
+\setbeamercolor{normal text}			{fg=darkgray, bg=white}
+
+\setbeamercolor{jumbo}                  {bg=secondarygreen}
+\setbeamercolor{progress bar}           {fg=primarygreen, bg=greygreen}
+\setbeamercolor{progress bar progress}  {use=progress bar, bg=progress bar.fg}
+
+\setbeamercolor{block title}            {use=structure, fg=white, bg=secondarygreen}
+\setbeamercolor{block body}             {use=structure, fg=darkgray, bg=softgreen}
+
+\hypersetup{
+	colorlinks,
+	linkcolor=primarygreen,
+	anchorcolor=darkgreen,
+	citecolor=blue!80,
+	urlcolor=secondarygreen,
+}
+
+% ================================================================================
+% Fonts
+% ================================================================================
+
+\setbeamerfont{title}					{series=\bfseries, size=\Large}
+\setbeamerfont{subtitle}				{series=\mdseries, size=\normalsize}
+
+\setbeamerfont{author}					{size=\small}
+\setbeamerfont{date}					{size=\footnotesize}
+\setbeamerfont{institute}				{size=\footnotesize}
+
+\setbeamerfont{alerted text}			{series=\bfseries}
+
+\setbeamerfont{frametitle}				{series=\bfseries}
+\setbeamerfont{framesubtitle}			{series=\mdseries}
+\setbeamerfont{footline}				{size=\scriptsize}
+\setbeamerfont{block title}				{size=\normalsize, series=\bfseries}
+\setbeamerfont{block body}				{size=\normalsize}
+
+\usefonttheme{serif}
+
+% ================================================================================
+% Basic Settings
+% ================================================================================
+
+% cancel navigation symbols
+\setbeamertemplate{navigation symbols}{}
+
+% prettier boxes
+\setbeamertemplate{blocks}[rounded]
+
+% bullet points
+\setbeamertemplate{itemize item}		{\textbullet}
+\setbeamertemplate{itemize subitem}		{\textemdash}
+\setbeamertemplate{itemize subsubitem}	{\ensuremath{\circ}}
+
+% paragraph spacing
+\setlength{\parskip}					{5pt}
+
+% code environment
+\lstdefinestyle{mystyle}{
+    commentstyle=\color{polyured2!50},
+    keywordstyle=\color{polyured},
+    numberstyle=\tiny\color{greygreen},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\scriptsize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=4,
+    xleftmargin=10pt,
+    xrightmargin=10pt,
+}
+\lstset{style=mystyle}
+
+% ================================================================================
+% Slide Templates
+% ================================================================================
+
+% headline for all frames
+\setbeamertemplate{headline}{
+	\ifnum\theframenumber=1
+		% not display the headline for the title page
+	\else
+		\begin{beamercolorbox}[wd=\paperwidth,ht=40pt]{head}
+			\hspace{410pt}\raisebox{1.3ex}{\includegraphics[width=35pt]{source/logo-white.png}} % 将宽度从40pt改为30pt
+		\end{beamercolorbox}
+	\fi
+}
+
+% frame title and subtitle
+\setbeamertemplate{frametitle}{
+    \begin{picture}(0,0)
+        \ifx\insertframesubtitle\@empty%
+            \put(0,27){\usebeamerfont{frametitle}\usebeamercolor[fg]{title}\insertframetitle}%
+		\else%
+			\put(0,32){\usebeamerfont{frametitle}\usebeamercolor[fg]{title} \insertframetitle}%
+			\put(0,20){\usebeamerfont{framesubtitle}\usebeamercolor[fg]{title} \insertframesubtitle }
+		\fi
+    \end{picture}
+}
+
+% title page
+\setbeamertemplate{title page}{
+	\begin{picture}(0,0)
+		\put(-24,67){\includegraphics[width=140pt]{source/logo-name.png}}
+        \put(-5,-77){
+            \begin{beamercolorbox}[wd=1.1\paperwidth,ht=140pt]{jumbo}
+            \end{beamercolorbox}
+        }
+        \put(243,-135){\includegraphics[width=250pt]{source/logo-trans.png}}
+		\put(0,25){%
+			\begin{minipage}{300pt}
+				\usebeamerfont{title}\usebeamercolor[fg]{title}\inserttitle\par
+				\vspace{10pt}
+				\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle
+			\end{minipage}
+		}
+		\put(0,-45){%
+			\usebeamerfont{author}\usebeamercolor[fg]{author}\insertauthor
+		}
+        \put(0,-58){%
+			\usebeamerfont{institute}\usebeamercolor[fg]{institute}\insertinstitute
+		}
+		\put(0,-70){%
+			\usebeamerfont{date}\usebeamercolor[fg]{date}\insertdate
+		}
+        \put(285,-118){\includegraphics[width=140pt]{source/tagline.png}}
+	\end{picture}
+}
+
+% progress bar at the bottom
+\defbeamertemplate{footline}{progress bar}{
+	\dimen0=\paperwidth
+    \divide\dimen0 by \inserttotalframenumber
+	\multiply\dimen0 by \insertframenumber
+	\edef\progressbarwidth{\the\dimen0}
+	\leavevmode%
+	\ifnum\theframenumber=1
+	\else
+		\begin{beamercolorbox}[wd=\paperwidth,ht=2pt,dp=1pt]{progress bar}
+			\begin{beamercolorbox}[wd=\progressbarwidth,ht=2pt,dp=1pt]{progress bar progress}
+			\end{beamercolorbox}%
+		\end{beamercolorbox}%
+	\fi
+}
+
+\setbeamertemplate{footline}[progress bar]
+
+% last frame
+\newcommand{\backmatter}{
+	\begingroup
+	\setbeamertemplate{headline}{}
+	\setbeamertemplate{footline}{}
+	\begin{frame}[c]{}
+		\begin{picture}(0,0)
+			\put(-28.5,-25){\includegraphics[width=1.01\paperwidth]{source/last-frame.png}}
+		\end{picture}
+	\end{frame}
+\endgroup
+}
+
+% style of sections and subsections in ToCs
+\setbeamertemplate{section in toc}{
+	$\blacktriangleright$~\textbf{\inserttocsection}
+}
+\setbeamertemplate{subsection in toc}{}
+\setbeamertemplate{frametitle continuation}{}
+
+% begin of sections
+\AtBeginSection[]
+{
+    \begingroup
+    \begin{frame}{Contents}{}
+    	\begin{picture}(0,0)
+    		\put(-42,-170){\includegraphics[width=1.1\paperwidth]{source/silhouette}}
+    	\end{picture}
+        \tableofcontents[currentsection]
+    \end{frame}
+    \endgroup
+}
