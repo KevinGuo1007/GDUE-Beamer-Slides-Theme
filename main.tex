@@ -1,8 +1,14 @@
-\documentclass[10pt,aspectratio=169]{beamer}
+\documentclass[
+	10pt,
+	aspectratio=169,	%	使用 16:9 比例	use 16:9 aspect ratio
+	]{beamer}	%	切换为 ctexbeamer 以支持中文内容	switch to ctexbeamer to support Chinese content
+
 \usepackage{gdue}
 
+%\usepackage{gbt7714}	%	国标引用方式
+
 % ================================================================================
-% Metadata
+% Metadata	
 % ================================================================================
 
 \title{GDUE Beamer Presentation Theme}
@@ -32,10 +38,10 @@
 
 \begin{frame}{Beamer vs. MS PowerPoint}
 
-	Compared to Microsoft PowerPoint, \LaTeX\ and Beamer provides these advantages:
+	Compared to Microsoft PowerPoint, \LaTeX\ and Beamer provides\cite{lamport1994latex} these advantages:
 	
 	\begin{itemize}
-		\item Beamer produces a \texttt{.pdf} file with no problems on fonts, formulas, or program versions.
+		\item Beamer produces a \texttt{.pdf} file with no problems\cite{goossens1997latex} on fonts, formulas, or program versions.
 		\item Math typesetting in \LaTeX\ is much easier, e.g.,
 			\begin{equation*}
 				\mathrm{i}\,\hslash\frac{\partial}{\partial t} \Psi(\mathbf{r},t) =
@@ -142,6 +148,12 @@
 		\item If you have corrections or suggestions, please feel free to contact \href{mailto:ruisong20@gmail.com}{me}!
         \item You can also find this project on \href{https://github.com/wurahara/PolyU-Beamer-Slides}{Github}! Stars are welcome!
 	\end{itemize}
+\end{frame}
+
+\section{References}
+\begin{frame}[allowframebreaks]{References}
+  \bibliographystyle{plain}
+  \bibliography{ref}
 \end{frame}
 
 \backmatter % generate the final slide
