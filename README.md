@@ -1,143 +1,164 @@
-# GDUE-Beamer-Slides-Theme
+# GDUE Beamer Slides Theme
 
-欢迎使用 GDUE Beamer Slides Theme! 🥳
+GDUE Beamer Slides Theme 是一个面向广东第二师范学院场景的 Beamer 幻灯片主题。
+本仓库参考了 [matze/mtheme](https://github.com/matze/mtheme) 的工程组织方式，目标是做到：
 
-GDUE Beamer Slides Theme 是广东第二师范学院的非官方 Beamer 模版。您可以使用该主题模板制作幻灯片，展示您的成果。
+- 易上手：新用户几分钟内可编译出第一份幻灯片
+- 易维护：主题代码、示例、文档、构建流程清晰分离
+- 易扩展：支持主题选项与资源覆盖，不需要频繁改主题源码
 
-本主题基于 [PolyU-Beamer-Slides](https://github.com/wurahara/PolyU-Beamer-Slides?tab=readme-ov-file) 制作，支持现代化的排版风格、清晰的版面布局，帮助你快速制作高质量的幻灯片。
+## Features
 
-## 快速上手 👋
+- 标准 Beamer 主题入口：`\usetheme{gdue}`
+- 可配置主题选项：`progressbar`、`sectionpage`、`darkmode`、`serif`
+- 内置封面、章节过渡页、结束页
+- 内置代码高亮风格与 `codeblock` 环境
+- 提供最小示例（`main.tex`）和完整示例（`demo/demo.tex`）
+- 提供 `Makefile` 与 CI 编译流程
 
-该仓库主要包含 'gdue.sty' 和 'main.tex'，项目结构如下：
+## Installation
+
+### 1) 在单个项目中使用（推荐新手）
+
+将以下文件复制到你的幻灯片工程目录：
+
+- `beamerthemegdue.sty`
+- `gdue.sty`（兼容层，可选）
+- `source/` 目录（默认图片资源）
+
+然后在 tex 文件中使用：
+
+```tex
+\documentclass{beamer}
+\usetheme{gdue}
 ```
-.
-├──.gitignore
-├── gdue.sty
-├── LICENSE
-├── main.pdf
-├── main.tex
-├── README.md
-└── source
-    ├── last-frame.png
-    ├── logo-name.png
-    ├── logo-trans.png
-    ├── logo-white.png
-    ├── silhouette.pdf
-    └── tagline.png
+
+### 2) 安装到本机 TeX 树（复用到多个项目）
+
+```bash
+make install
 ```
 
-目前的 'main.tex' 是一个示例文档《如何使用 LaTeX 排版论文》。您可以将里面的内容替换掉。下面是一个最简示例：
-<details>
+卸载：
 
-<summary>点击展开代码片段</summary>
+```bash
+make uninstall
+```
 
-```latex
-\documentclass[
-    % draft,          % 草稿模式
-    aspectratio=169,  % 使用 16:9 比例
-]{ctexbeamer}
-\mode<presentation>
+## Usage
 
-\usetheme[min]{sjtubeamer}
-% 使用 maxplus/max/min 切换标题页样式
-% 使用 red/blue 切换主色调
-% 使用 light/dark 切换亮/暗色模式
-% 使用外样式关键词以获得不同的边栏样式
-%   miniframes infolines  sidebar 
-%   default    smoothbars split	 
-%   shadow     tree       smoothtree
-% 使用 topright/bottomright 切换徽标位置
-% 使用逗号分隔列表以同时使用多种选项
+### Minimal example
 
-% \tikzexternalize[prefix=build/]
-% 如果您需要缓存 tikz 图像，请取消注释上一行，并在编译选项中添加 -shell-escape。
+```tex
+\documentclass[aspectratio=169]{beamer}
+\usetheme{gdue}
 
-\usepackage[backend=biber,style=gb7714-2015]{biblatex}
-\addbibresource{thesis.bib}
-
-\institute[SJTUG]{上海交通大学 Linux 用户组} % 组织
-
-\title{SJTUBeamer 幻灯片模板}         % 标题
-\subtitle{SJTUBeamer Template}       % 副标题
-\author{SJTUG}                       % 作者
-\date{\today}                        % 日期  
+\title{A minimal example}
+\author{Your Name}
+\date{\today}
 
 \begin{document}
+\maketitle
 
-\maketitle                           % 创建标题页
-
-\part{第一部分}
-
-% 使用节目录
-\AtBeginSection[]{
-  \begin{frame}
-    % \tableofcontents[currentsection,hideallsubsections]  % 传统节目录             
-    \sectionpage                        % 节页
-  \end{frame}
-}
-
-\section{第 1 节}
-
-\begin{frame}
-  \frametitle{标题}
-  \paragraph{列表} 这个\alert{幻灯片}有下面几项：
-  \begin{itemize}
-    \item 第 1 项
-    \item 第 2 项
-    \item 第 3 项
-  \end{itemize}
+\begin{frame}{Hello}
+  Hello, GDUE theme.
 \end{frame}
 
-\begin{frame}
-  \frametitle{标题}
-  \framesubtitle{子标题}
-  \begin{equation}
-    x^2+2x+1=(x+1)^2
-  \end{equation}
-\end{frame}
-
-\section{第 2 节}
-\begin{frame}
-  \frametitle{一些盒子}
-  \begin{block}{盒子}
-    这是一个盒子\cite{thelegendofjiang}
-  \end{block}
-  \begin{alertblock}{注意}
-    注意内容
-  \end{alertblock}
-  \begin{exampleblock}{示例}
-    示例内容
-  \end{exampleblock}
-\end{frame}
-
-\begin{frame}[fragile]          % 注意添加 fragile 标记
-  \frametitle{代码块}
-  % 代码块参数：语言，标题
-  % 请减少代码初始的缩进
-  \begin{codeblock}[language=c++]{C++代码}
-#include<iostream>
-
-int main(){
-  // Console Output
-  std::cout << "Hello, SJTU!" << std::endl;
-  return 0;
-}
-  \end{codeblock}
-\end{frame}
-
-\part{参考文献}
-\begin{frame}[allowframebreaks]
-  \printbibliography[heading=none]
-\end{frame}
-
-\makebottom       % 创建结束页
-
+\backmatter
 \end{document}
 ```
 
-</details>
+### Theme options
 
+```tex
+\usetheme[
+  progressbar=true,
+  sectionpage=true,
+  darkmode=false,
+  serif=true
+]{gdue}
+```
 
+可用选项：
 
-> ⚠️ **caution**  
-> 本 theme 中 slide 的背景里的建筑物为原 PolyU theme 的建筑物图片，如果有同学有相关合适的照片请在 discuss 中联系我。
+- `progressbar=true|false`：是否显示底部进度条（默认 `true`）
+- `sectionpage=true|false`：是否在每个 section 开头展示目录过渡页（默认 `true`）
+- `darkmode=true|false`：是否启用深色模式（默认 `false`）
+- `serif=true|false`：是否使用衬线字体主题（默认 `true`）
+
+### Asset override
+
+你可以不修改主题源码，直接覆盖资源路径或文件名：
+
+```tex
+\gduesetresourcepath{./assets}
+\gduesetlogoname{school-logo.png}
+\gduesetheadlogo{logo-light.png}
+\gduesetwatermark{logo-bg.png}
+\gduesetsilhouette{campus.pdf}
+\gduesetlastframe{thanks.png}
+```
+
+## Repository Layout
+
+```text
+.
+├── beamerthemegdue.sty      # 主主题文件（推荐入口：\usetheme{gdue}）
+├── gdue.sty                 # 兼容层（旧用法 \usepackage{gdue}）
+├── main.tex                 # 最小可运行示例
+├── demo/
+│   └── demo.tex             # 完整示例
+├── source/                  # 默认图片资源
+├── docs/
+│   └── USAGE.md             # 详细使用说明
+├── Makefile                 # 构建与安装命令
+└── .github/workflows/
+    └── latex.yml            # CI 编译检查
+```
+
+## Development
+
+编译所有示例：
+
+```bash
+make check
+```
+
+只编译最小示例：
+
+```bash
+make main
+```
+
+只编译完整示例：
+
+```bash
+make demo
+```
+
+清理中间文件：
+
+```bash
+make clean
+```
+
+彻底清理（包含 PDF）：
+
+```bash
+make distclean
+```
+
+## Documentation
+
+- 详细使用说明：[`docs/USAGE.md`](docs/USAGE.md)
+- 贡献指南：[`CONTRIBUTING.md`](CONTRIBUTING.md)
+- 变更记录：[`CHANGELOG.md`](CHANGELOG.md)
+
+## Acknowledgements
+
+- [matze/mtheme](https://github.com/matze/mtheme)
+- [wurahara/PolyU-Beamer-Slides](https://github.com/wurahara/PolyU-Beamer-Slides)
+
+## License
+
+[MIT](LICENSE)
