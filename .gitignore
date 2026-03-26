@@ -1,4 +1,7 @@
 ## Core latex/pdflatex auxiliary files:
+.DS_Store
+build/
+
 *.aux
 *.lof
 *.log
@@ -23,6 +26,12 @@
 
 ## Generated if empty string is given at "Please type another file name for output:"
 .pdf
+
+## Project build outputs
+main.pdf
+demo.pdf
+demo/demo.pdf
+gdue-*-test.pdf
 
 ## Bibliography auxiliary files (bibtex/biblatex/biber):
 *.bbl
