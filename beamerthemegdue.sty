@@ -1,0 +1,289 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{beamerthemegdue}[2026/03/25 v1.0.0 GDUE Beamer theme]
+
+\RequirePackage{etoolbox}
+\RequirePackage{tikz}
+\RequirePackage{xcolor}
+\RequirePackage{listings}
+\RequirePackage{graphicx}
+\RequirePackage{hyperref}
+
+% ------------------------------------------------------------------------------
+% Theme options
+% ------------------------------------------------------------------------------
+
+\newif\ifgdue@progressbar
+\newif\ifgdue@sectionpage
+\newif\ifgdue@serif
+\newif\ifgdue@darkmode
+
+\gdue@progressbartrue
+\gdue@sectionpagetrue
+\gdue@seriftrue
+\gdue@darkmodefalse
+
+\newcommand{\gdue@setbool}[2]{%
+  \ifstrequal{#2}{true}{\csname gdue@#1true\endcsname}{%
+    \ifstrequal{#2}{false}{\csname gdue@#1false\endcsname}{%
+      \PackageWarning{beamerthemegdue}{Unknown value '#2' for option '#1'. Use true or false}%
+    }%
+  }%
+}
+
+\DeclareOptionBeamer{progressbar}[true]{\gdue@setbool{progressbar}{#1}}
+\DeclareOptionBeamer{sectionpage}[true]{\gdue@setbool{sectionpage}{#1}}
+\DeclareOptionBeamer{serif}[true]{\gdue@setbool{serif}{#1}}
+\DeclareOptionBeamer{darkmode}[false]{\gdue@setbool{darkmode}{#1}}
+\ProcessOptionsBeamer
+
+% ------------------------------------------------------------------------------
+% Public customization hooks
+% ------------------------------------------------------------------------------
+
+\newcommand{\gdue@resourcepath}{source}
+\newcommand{\gdue@logoNameFile}{logo-name.png}
+\newcommand{\gdue@logoWhiteFile}{logo-white.png}
+\newcommand{\gdue@logoTransFile}{logo-trans.png}
+\newcommand{\gdue@taglineFile}{tagline.png}
+\newcommand{\gdue@silhouetteFile}{silhouette.pdf}
+\newcommand{\gdue@lastFrameFile}{last-frame.png}
+
+\newcommand{\gdueasset}[1]{\gdue@resourcepath/#1}
+\newcommand{\gduesetresourcepath}[1]{\renewcommand{\gdue@resourcepath}{#1}}
+\newcommand{\gduesetlogoname}[1]{\renewcommand{\gdue@logoNameFile}{#1}}
+\newcommand{\gduesetheadlogo}[1]{\renewcommand{\gdue@logoWhiteFile}{#1}}
+\newcommand{\gduesetwatermark}[1]{\renewcommand{\gdue@logoTransFile}{#1}}
+\newcommand{\gduesettagline}[1]{\renewcommand{\gdue@taglineFile}{#1}}
+\newcommand{\gduesetsilhouette}[1]{\renewcommand{\gdue@silhouetteFile}{#1}}
+\newcommand{\gduesetlastframe}[1]{\renewcommand{\gdue@lastFrameFile}{#1}}
+
+% ------------------------------------------------------------------------------
+% Color tokens
+% ------------------------------------------------------------------------------
+
+\definecolor{primarygreen}{HTML}{529234}
+\definecolor{secondarygreen}{HTML}{8BC34A}
+\definecolor{darkgreen}{HTML}{3B6E22}
+\definecolor{greygreen}{HTML}{5E7551}
+\definecolor{softgreen}{HTML}{E1F0DA}
+\definecolor{darkbg}{HTML}{1D2419}
+\definecolor{darkpanel}{HTML}{2D3A26}
+\definecolor{darktext}{HTML}{EAF4E4}
+
+\ifgdue@darkmode
+  \setbeamercolor{normal text}{fg=darktext,bg=darkbg}
+  \setbeamercolor{title}{fg=white}
+  \setbeamercolor{subtitle}{fg=white}
+  \setbeamercolor{author}{fg=white}
+  \setbeamercolor{date}{fg=white}
+  \setbeamercolor{institute}{fg=white}
+  \setbeamercolor{head}{bg=darkpanel}
+  \setbeamercolor{frametitle}{fg=white,bg=darkpanel}
+  \setbeamercolor{framesubtitle}{fg=softgreen}
+  \setbeamercolor{alerted text}{fg=secondarygreen}
+  \setbeamercolor{structure}{fg=secondarygreen}
+  \setbeamercolor{block title}{fg=white,bg=darkpanel}
+  \setbeamercolor{block body}{fg=darktext,bg=darkpanel!70!black}
+  \setbeamercolor{jumbo}{bg=darkpanel}
+  \setbeamercolor{progress bar}{fg=secondarygreen,bg=darkpanel!60!black}
+\else
+  \setbeamercolor{normal text}{fg=black,bg=white}
+  \setbeamercolor{title}{fg=white}
+  \setbeamercolor{subtitle}{fg=white}
+  \setbeamercolor{author}{fg=white}
+  \setbeamercolor{date}{fg=white}
+  \setbeamercolor{institute}{fg=white}
+  \setbeamercolor{head}{bg=secondarygreen}
+  \setbeamercolor{frametitle}{fg=white,bg=secondarygreen}
+  \setbeamercolor{framesubtitle}{fg=white}
+  \setbeamercolor{alerted text}{fg=primarygreen}
+  \setbeamercolor{structure}{fg=primarygreen}
+  \setbeamercolor{block title}{fg=white,bg=secondarygreen}
+  \setbeamercolor{block body}{fg=black,bg=softgreen}
+  \setbeamercolor{jumbo}{bg=secondarygreen}
+  \setbeamercolor{progress bar}{fg=primarygreen,bg=greygreen!35}
+\fi
+
+\setbeamercolor{progress bar progress}{use=progress bar,bg=progress bar.fg}
+
+\hypersetup{
+  colorlinks,
+  linkcolor=primarygreen,
+  anchorcolor=darkgreen,
+  citecolor=darkgreen,
+  urlcolor=secondarygreen,
+}
+
+% ------------------------------------------------------------------------------
+% Typography
+% ------------------------------------------------------------------------------
+
+\setbeamerfont{title}{series=\bfseries,size=\Large}
+\setbeamerfont{subtitle}{series=\mdseries,size=\normalsize}
+\setbeamerfont{author}{size=\small}
+\setbeamerfont{date}{size=\footnotesize}
+\setbeamerfont{institute}{size=\footnotesize}
+\setbeamerfont{frametitle}{series=\bfseries,size=\large}
+\setbeamerfont{framesubtitle}{series=\mdseries,size=\small}
+\setbeamerfont{footline}{size=\scriptsize}
+\setbeamerfont{alerted text}{series=\bfseries}
+\setbeamerfont{block title}{size=\normalsize,series=\bfseries}
+\setbeamerfont{block body}{size=\normalsize}
+
+\ifgdue@serif
+  \usefonttheme{serif}
+\else
+  \usefonttheme{default}
+\fi
+
+% ------------------------------------------------------------------------------
+% Generic beamer settings
+% ------------------------------------------------------------------------------
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{blocks}[rounded]
+\setbeamertemplate{itemize item}{\textbullet}
+\setbeamertemplate{itemize subitem}{\textendash}
+\setbeamertemplate{itemize subsubitem}{\ensuremath{\circ}}
+\setbeamertemplate{bibliography item}[text]
+\setlength{\parskip}{4pt}
+
+% ------------------------------------------------------------------------------
+% Listings
+% ------------------------------------------------------------------------------
+
+\lstdefinestyle{gdue}{
+  basicstyle=\ttfamily\scriptsize,
+  backgroundcolor=\color{softgreen!35},
+  commentstyle=\color{greygreen},
+  keywordstyle=\color{primarygreen},
+  stringstyle=\color{darkgreen},
+  numberstyle=\tiny\color{greygreen},
+  breaklines=true,
+  keepspaces=true,
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  tabsize=2,
+  numbers=left,
+  numbersep=6pt,
+  xleftmargin=10pt,
+  xrightmargin=10pt,
+  frame=single,
+  framerule=0.4pt,
+  rulecolor=\color{greygreen!50},
+}
+\lstset{style=gdue}
+
+\lstnewenvironment{codeblock}[2][]{%
+  \lstset{style=gdue,caption={#2},#1}%
+}{}
+
+% ------------------------------------------------------------------------------
+% Core templates
+% ------------------------------------------------------------------------------
+
+\setbeamertemplate{headline}{%
+  \ifnum\value{framenumber}=1\relax
+  \else
+    \begin{beamercolorbox}[wd=\paperwidth,ht=3.2ex,dp=1.2ex,leftskip=1em,rightskip=1em]{head}
+      \hfill\includegraphics[height=2.1ex]{\gdueasset{\gdue@logoWhiteFile}}
+    \end{beamercolorbox}
+  \fi
+}
+
+\setbeamertemplate{frametitle}{%
+  \nointerlineskip
+  \begin{beamercolorbox}[wd=\paperwidth,leftskip=1em,rightskip=1em,sep=0.45ex]{frametitle}
+    \usebeamerfont{frametitle}\insertframetitle\par
+    \ifx\insertframesubtitle\@empty
+    \else
+      {\usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}\insertframesubtitle\par}
+    \fi
+  \end{beamercolorbox}
+}
+
+\setbeamertemplate{title page}{%
+  \begin{picture}(0,0)
+    \put(-24,67){\includegraphics[width=140pt]{\gdueasset{\gdue@logoNameFile}}}
+    \put(-5,-77){
+      \begin{beamercolorbox}[wd=1.1\paperwidth,ht=140pt]{jumbo}
+      \end{beamercolorbox}
+    }
+    \put(243,-135){\includegraphics[width=250pt]{\gdueasset{\gdue@logoTransFile}}}
+    \put(0,25){%
+      \begin{minipage}{300pt}
+        \usebeamerfont{title}\usebeamercolor[fg]{title}\inserttitle\par
+        \vspace{10pt}
+        \usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle
+      \end{minipage}
+    }
+    \put(0,-45){%
+      \usebeamerfont{author}\usebeamercolor[fg]{author}\insertauthor
+    }
+    \put(0,-58){%
+      \usebeamerfont{institute}\usebeamercolor[fg]{institute}\insertinstitute
+    }
+    \put(0,-70){%
+      \usebeamerfont{date}\usebeamercolor[fg]{date}\insertdate
+    }
+    \put(285,-118){\includegraphics[width=140pt]{\gdueasset{\gdue@taglineFile}}}
+  \end{picture}
+}
+
+\defbeamertemplate{footline}{progress bar}{%
+  \ifnum\value{framenumber}=1\relax
+  \else
+    \dimen0=\paperwidth
+    \divide\dimen0 by \inserttotalframenumber
+    \multiply\dimen0 by \insertframenumber
+    \edef\progressbarwidth{\the\dimen0}
+    \begin{beamercolorbox}[wd=\paperwidth,ht=2pt,dp=0pt]{progress bar}
+      \begin{beamercolorbox}[wd=\progressbarwidth,ht=2pt,dp=0pt]{progress bar progress}
+      \end{beamercolorbox}
+    \end{beamercolorbox}
+  \fi
+}
+
+\ifgdue@progressbar
+  \setbeamertemplate{footline}[progress bar]
+\else
+  \setbeamertemplate{footline}{}
+\fi
+
+% ------------------------------------------------------------------------------
+% Helper commands
+% ------------------------------------------------------------------------------
+
+\newcommand{\backmatter}{%
+  \begingroup
+    \setbeamertemplate{headline}{}
+    \setbeamertemplate{footline}{}
+    \begin{frame}[c]{}
+      \begin{picture}(0,0)
+        \put(-28.5,-25){\includegraphics[width=1.01\paperwidth]{\gdueasset{\gdue@lastFrameFile}}}
+      \end{picture}
+    \end{frame}
+  \endgroup
+}
+
+\newcommand{\makebottom}{\backmatter}
+
+\setbeamertemplate{section in toc}{$\blacktriangleright$~\textbf{\inserttocsection}}
+\setbeamertemplate{subsection in toc}{}
+\setbeamertemplate{frametitle continuation}{}
+
+\ifgdue@sectionpage
+  \AtBeginSection[]{%
+    \begingroup
+    \begin{frame}{Contents}
+      \begin{picture}(0,0)
+        \put(-42,-170){\includegraphics[width=1.1\paperwidth]{\gdueasset{\gdue@silhouetteFile}}}
+      \end{picture}
+      \tableofcontents[currentsection]
+    \end{frame}
+    \endgroup
+  }
+\fi
+
+\endinput

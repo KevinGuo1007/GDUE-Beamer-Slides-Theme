@@ -1,25 +1,16 @@
-\documentclass[
-	10pt,
-	aspectratio=169,	%	使用 16:9 比例	use 16:9 aspect ratio
-	]{beamer}	%	切换为 ctexbeamer 以支持中文内容	switch to ctexbeamer to support Chinese content
+\documentclass[10pt,aspectratio=169]{beamer}
 
-\usepackage{gdue}
+\usetheme[progressbar=true,sectionpage=true]{gdue}
+% \usetheme[progressbar=false,sectionpage=false,darkmode=true,serif=false]{gdue}
 
-%\usepackage{gbt7714}	%	国标引用方式
+% If your file is not in the repository root, set your asset path explicitly.
+% \gduesetresourcepath{../source}
 
-% ================================================================================
-% Metadata	
-% ================================================================================
-
-\title{GDUE Beamer Presentation Theme}
-\subtitle{Using \LaTeX\ to prepare slides}
-\author{Kevin Guo}
-\institute[COMP]{Department of Computing}
+\title{GDUE Beamer Theme}
+\subtitle{A Practical Starter Deck}
+\author{Your Name}
+\institute{Guangdong University of Education}
 \date{\today}
-
-% ================================================================================
-% Main Body
-% ================================================================================
 
 \begin{document}
 \maketitle % generate the title slide
@@ -39,16 +30,16 @@
 \begin{frame}{Beamer vs. MS PowerPoint}
 
 	Compared to Microsoft PowerPoint, \LaTeX\ and Beamer provides\cite{lamport1994latex} these advantages:
-	
-	\begin{itemize}
-		\item Beamer produces a \texttt{.pdf} file with no problems\cite{goossens1997latex} on fonts, formulas, or program versions.
-		\item Math typesetting in \LaTeX\ is much easier, e.g.,
+
+\begin{itemize}
+  \item Beamer produces a \texttt{.pdf} file with no problems\cite{goossens1997latex} on fonts, formulas, or program versions.
+  \item Math typesetting in \LaTeX\ is much easier, e.g.,
 			\begin{equation*}
 				\mathrm{i}\,\hslash\frac{\partial}{\partial t} \Psi(\mathbf{r},t) =
 				-\frac{\hslash^2}{2\,m}\nabla^2\Psi(\mathbf{r},t)
 				+ V(\mathbf{r})\Psi(\mathbf{r},t).
 			\end{equation*}
-	\end{itemize}
+\end{itemize}
 \end{frame}
 
 \section{Examples}
@@ -56,14 +47,14 @@
 \begin{frame}[fragile]{Document Class}
 
 	To begin with, just use \texttt{beamer} document class with \texttt{poly} theme. It should be noted that the \texttt{poly.sty} file should be included in the same directory as the \texttt{main.tex} file.
-	
+
 \begin{block}{Preamble about the document class}
 \begin{lstlisting}[language=TeX]
 \documentclass[10pt,aspectratio=169]{beamer}
 \usepackage{poly}
 \end{lstlisting}
 \end{block}
-	
+
 	You can change the \texttt{aspectratio} to \texttt{43} to adjust the slide aspect ratio to 4:3.
 \end{frame}
 
@@ -72,12 +63,12 @@
 
 \begin{block}{Metadata}
 \begin{lstlisting}[language=TeX]
-\title{Your Title}
+  \title{Your Title}
 \subtitle{Your Subtitle}
 \author{First Author, Second Author}
-\institute[COMP]{Department of Computing}
+    \institute[COMP]{Department of Computing}
 \date{Date}
-\end{lstlisting}
+      \end{lstlisting}
 \end{block}
 
 	Once settled, you can render the title slide with the command \verb|\maketitle| in the body.
@@ -86,11 +77,11 @@
 \begin{frame}[fragile]{Texts}{In a Sequence}
 
 	\begin{itemize}[<+->]
-		\item A typical slide has bulleted points.
-		\item These can be uncovered in sequence.
+      \item A typical slide has bulleted points.
+      \item These can be uncovered in sequence.
 		\item When rendered, they will be separated into multiple slides.
-	\end{itemize}
-
+    \end{itemize}
+  
 \end{frame}
 
 \begin{frame}{Images}
@@ -112,30 +103,30 @@
 	\vspace{20pt}
 	
 	\begin{columns}
-		\begin{column}{0.6\textwidth}
+\begin{column}{0.6\textwidth}
 			This is the first column.\\[10pt]
 			You can have some texts here.
-		\end{column}
+\end{column}
 		
 		\begin{column}{0.3\textwidth}
 			And this is the second one.\\[10pt]
 			You can have some pictures or tables here.
-		\end{column}
+\end{column}
 	\end{columns}
 
 \end{frame}
 
 \begin{frame}{Fonts}
-	
-	The priority when choosing a font is readability.
+
+The priority when choosing a font is readability.
 	
 	Here, we give some advice:
-	\begin{itemize}
-		\item Use serif (default) fonts only with high-resolution projectors or monitors.
+\begin{itemize}
+  \item Use serif (default) fonts only with high-resolution projectors or monitors.
 		\item Use \textsf{sans-serif} fonts otherwise.
 		\item Use \textit{italic} or \textbf{bold} fonts to emphasize or highlight points.
 		\item We also provide an \alert{alert} font for emphasise.
-		\item Use \texttt{monospace} fonts to display codes.
+  \item Use \texttt{monospace} fonts to display codes.
 	\end{itemize}
 
 \end{frame}
@@ -145,14 +136,14 @@
 \begin{frame}{Good Luck!}
 	\begin{itemize}
 		\item Enough for an introduction! You should know enough by now.
-		\item If you have corrections or suggestions, please feel free to contact \href{mailto:ruisong20@gmail.com}{me}!
+  \item If you have corrections or suggestions, please feel free to contact \href{mailto:ruisong20@gmail.com}{me}!
         \item You can also find this project on \href{https://github.com/wurahara/PolyU-Beamer-Slides}{Github}! Stars are welcome!
-	\end{itemize}
+\end{itemize}
 \end{frame}
 
 \section{References}
 \begin{frame}[allowframebreaks]{References}
-  \bibliographystyle{plain}
+  \bibliographystyle{unsrt}
   \bibliography{ref}
 \end{frame}
 

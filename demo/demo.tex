@@ -1,0 +1,104 @@
+\documentclass[10pt,aspectratio=169]{beamer}
+
+\usetheme[progressbar=true,sectionpage=true]{gdue}
+
+\IfFileExists{source/logo-white.png}{
+  \gduesetresourcepath{source}
+}{
+  \gduesetresourcepath{../source}
+}
+
+\title{GDUE Beamer Theme Demo}
+\subtitle{Comprehensive Usage Example}
+\author{GDUE Theme Maintainers}
+\institute{Guangdong University of Education}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Overview}
+
+\begin{frame}{Design Goals}
+\begin{itemize}
+  \item Easy onboarding for first-time Beamer users.
+  \item Clean defaults with minimal setup in each project.
+  \item Configurable style options for different scenarios.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Theme Options}
+\begin{block}{Supported options}
+\begin{itemize}
+  \item \texttt{progressbar=true|false}
+  \item \texttt{sectionpage=true|false}
+  \item \texttt{darkmode=true|false}
+  \item \texttt{serif=true|false}
+\end{itemize}
+\end{block}
+\end{frame}
+
+\section{Layouts}
+
+\begin{frame}{Table + Text}
+\begin{columns}[T]
+  \begin{column}{0.56\textwidth}
+    \begin{table}
+      \centering
+      \begin{tabular}{lrr}
+        \hline
+        Item & Q1 & Q2 \\
+        \hline
+        A & 42 & 58 \\
+        B & 30 & 41 \\
+        C & 26 & 36 \\
+        \hline
+      \end{tabular}
+    \end{table}
+  \end{column}
+  \begin{column}{0.40\textwidth}
+    \begin{itemize}
+      \item Tables remain readable.
+      \item Headline and progress bar are unobtrusive.
+      \item Suitable for reports and teaching slides.
+    \end{itemize}
+  \end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Code Snippet}
+\begin{codeblock}[language=TeX]{Switch to dark mode}
+\usetheme[
+  progressbar=true,
+  sectionpage=false,
+  darkmode=true,
+  serif=false
+]{gdue}
+\end{codeblock}
+\end{frame}
+
+\begin{frame}[fragile]{Asset Customization}
+\begin{block}{Override assets without editing the theme file}
+\begin{lstlisting}[language=TeX]
+\gduesetresourcepath{./assets}
+\gduesetlogoname{school-logo.png}
+\gduesetheadlogo{logo-light.png}
+\gduesetlastframe{thanks.png}
+\end{lstlisting}
+\end{block}
+\end{frame}
+
+\section{Conclusion}
+
+\begin{frame}{Recommended Workflow}
+\begin{enumerate}
+  \item Start from \texttt{main.tex} for new decks.
+  \item Use \texttt{demo/demo.tex} as a reference for advanced layouts.
+  \item Keep style changes in \texttt{beamerthemegdue.sty}.
+\end{enumerate}
+\end{frame}
+
+\backmatter
+
+\end{document}
