@@ -22,7 +22,8 @@
   progressbar=true,
   sectionpage=true,
   darkmode=false,
-  serif=true
+  serif=true,
+  language=en
 ]{gdue}
 ```
 
@@ -30,8 +31,27 @@
 - `sectionpage`: show or hide section transition slides.
 - `darkmode`: switch to a dark palette.
 - `serif`: switch between serif and default beamer fonts.
+- `language`: use `en` for the default English setup, or `zh` for Chinese content support.
 
-## 3. Asset Configuration
+## 3. Language Support
+
+English is the default:
+
+```tex
+\usetheme{gdue}
+% or
+\usetheme[language=en]{gdue}
+```
+
+For Chinese content, switch the theme option:
+
+```tex
+\usetheme[language=zh]{gdue}
+```
+
+When `language=zh` is enabled, the theme loads `ctex` with the `fandol` fontset, so you do not need to add `\usepackage{ctex}` manually. Repository `make` targets compile with `XeLaTeX` by default, which works for both English and Chinese decks.
+
+## 4. Asset Configuration
 
 Default assets are loaded from `source/`.
 
@@ -45,7 +65,7 @@ Default assets are loaded from `source/`.
 \gduesetlastframe{last-frame.png}
 ```
 
-## 4. Code Blocks
+## 5. Code Blocks
 
 The theme configures `listings` and provides `codeblock`:
 
@@ -57,7 +77,7 @@ print("Hello, GDUE")
 \end{frame}
 ```
 
-## 5. Final Slide
+## 6. Final Slide
 
 Use either command below (identical behavior):
 
@@ -67,7 +87,7 @@ Use either command below (identical behavior):
 \makebottom
 ```
 
-## 6. Build Commands
+## 7. Build Commands
 
 From repository root:
 

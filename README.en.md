@@ -18,7 +18,8 @@ GDUE Beamer Slides Theme is a Beamer theme repository tailored for Guangdong Uni
 
 - Standard Beamer entrypoint: use the theme via `\usetheme{gdue}`, with `gdue.sty` kept as a compatibility wrapper.
 - Complete page styling: built-in title page, headline, bottom progress bar, section transition page, and final slide.
-- Configurable theme switches: supports `progressbar`, `sectionpage`, `darkmode`, and `serif`.
+- Configurable theme switches: supports `progressbar`, `sectionpage`, `darkmode`, `serif`, and `language`.
+- English and Chinese content: English is the default; switch to `language=zh` when your deck contains Chinese text.
 - Asset override hooks: replace logos, watermark, tagline, section background, and final-slide image without editing theme source.
 - Built-in code presentation: integrates `listings` and provides a consistent `codeblock` environment.
 - Two example decks: `main.tex` for quick onboarding and `demo/demo.tex` for broader usage coverage.
@@ -41,19 +42,21 @@ To get started quickly, pick one based on your operating system:
 - Windows: install `MiKTeX`. It is beginner-friendly and can often install missing packages automatically during the first build.
 - Linux: install `TeX Live`. Prefer your distribution's full package set; if you use a smaller install, make sure `latexmk` is included.
 
-After installation, reopen your terminal and run:
+This repository builds with `XeLaTeX` by default so the same template can handle both English and Chinese content. After installation, reopen your terminal and run:
 
 ```bash
 latexmk -v
+xelatex --version
 ```
 
-If you see a version number, `latexmk` is installed correctly and you can continue with this project.
+If both commands print a version number, the required tools for this project are installed correctly.
 
 If you get `command not found`, it usually means one of these:
 
 - You installed only an editor, not an actual TeX distribution.
 - The installation just finished and the terminal has not been reopened yet.
 - The TeX distribution's binary directory is not in your `PATH`.
+- Your TeX installation is too minimal and does not include `xelatex`.
 
 ### 2. Clone the repository and build the starter deck
 
@@ -173,7 +176,8 @@ The theme supports the following switches:
   progressbar=true,
   sectionpage=true,
   darkmode=false,
-  serif=true
+  serif=true,
+  language=en
 ]{gdue}
 ```
 
@@ -181,6 +185,33 @@ The theme supports the following switches:
 - `sectionpage=true|false`: show or hide the section transition page. Default: `true`.
 - `darkmode=true|false`: switch to the dark color palette. Default: `false`.
 - `serif=true|false`: enable or disable the serif font theme. Default: `true`.
+- `language=en|zh`: document language support. Default: `en`; set it to `zh` to enable Chinese content support.
+
+### Language Support
+
+By default, the theme behaves like an English-first template. These two forms are equivalent:
+
+```tex
+\usetheme{gdue}
+% or
+\usetheme[language=en]{gdue}
+```
+
+If your slide titles, body text, or table of contents contain Chinese, switch to Chinese mode:
+
+```tex
+\usetheme[
+  progressbar=true,
+  sectionpage=true,
+  language=zh
+]{gdue}
+```
+
+Notes:
+
+- `language=zh` loads Chinese support inside the theme, so you do not need to add `\usepackage{ctex}` yourself.
+- `make main` and `make demo` already use `XeLaTeX`, so you do not need a different build command for English vs. Chinese decks.
+- English remains the default. If your deck is entirely in English, `\usetheme{gdue}` is enough.
 
 ### Asset Customization
 
@@ -241,8 +272,8 @@ When a slide contains code, remember to mark the frame as `[fragile]`.
 
 ## Acknowledgements
 
-- [matze/mtheme](https://github.com/matze/mtheme)
-- [wurahara/PolyU-Beamer-Slides](https://github.com/wurahara/PolyU-Beamer-Slides)
+- Project repo structure & CI Action was inspired by [matze/mtheme](https://github.com/matze/mtheme)
+- The design of beamer slide draws inspiration from [wurahara/PolyU-Beamer-Slides](https://github.com/wurahara/PolyU-Beamer-Slides)
 
 ## License
 

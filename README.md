@@ -14,11 +14,27 @@
 
 GDUE Beamer Slides Theme 是一个面向广东第二师范学院场景的 Beamer 幻灯片主题仓库，提供了可直接复用的主题包、默认视觉资源、示例文档，以及一套清晰的构建与维护流程。
 
+<table>
+  <tr>
+    <td><img src="source/example_01.png" alt="image1" width="100%"></td>
+    <td><img src="source/example_02.png" alt="image2" width="100%"></td>
+  </tr>
+  <tr>
+    <td><img src="source/example_03.png" alt="image3" width="100%"></td>
+    <td><img src="source/example_04.png" alt="image4" width="100%"></td>
+  </tr>
+  <tr>
+    <td><img src="source/example_05.png" alt="image5" width="100%"></td>
+    <td><img src="source/example_06.png" alt="image6" width="100%"></td>
+  </tr>
+</table>
+
 ## Features
 
 - 标准 Beamer 主题入口：支持使用 `\usetheme{gdue}` 接入主题，同时保留 `gdue.sty` 兼容层。
 - 完整页面样式：内置封面页、顶部页眉、底部进度条、章节目录过渡页和结束页。
-- 可切换主题选项：支持 `progressbar`、`sectionpage`、`darkmode`、`serif` 四个开关。
+- 可切换主题选项：支持 `progressbar`、`sectionpage`、`darkmode`、`serif` 和 `language`。
+- 中英文内容支持：默认英文；切换到 `language=zh` 后可直接编写中文内容。
 - 可覆盖默认资源：支持自定义 logo、watermark、tagline、章节背景和结束页图片，无需改动主题源码。
 - 内置代码展示能力：集成 `listings` 并提供统一风格的 `codeblock` 环境。
 - 提供两套示例：`main.tex` 用于快速起步，`demo/demo.tex` 用于展示更完整的用法。
@@ -41,19 +57,21 @@ GDUE Beamer Slides Theme 是一个面向广东第二师范学院场景的 Beamer
 - Windows：安装 `MiKTeX`，对新手比较友好，第一次编译时可以按提示自动补装缺失宏包。
 - Linux：安装 `TeX Live`，优先使用发行版提供的完整包；如果不是完整安装，至少要确保包含 `latexmk`。
 
-安装完成后，重新打开一个终端窗口，执行：
+本仓库默认使用 `XeLaTeX` 构建，这样同一套模板可以同时处理英文和中文内容。安装完成后，重新打开一个终端窗口，执行：
 
 ```bash
 latexmk -v
+xelatex --version
 ```
 
-如果终端能输出版本号，就说明 `latexmk` 已经安装成功，可以继续编译本项目。
+如果两条命令都能输出版本号，就说明构建本项目需要的工具已经安装成功。
 
 如果提示 `command not found`，通常是下面几种情况：
 
 - 你装的是编辑器，还没有安装真正的 TeX 发行版。
 - 安装刚完成，但终端还没有重开。
 - TeX 发行版的命令目录还没有加入 `PATH`。
+- 你的发行版安装得过于精简，没有包含 `xelatex`。
 
 ### 2. 获取项目并编译示例
 
@@ -173,7 +191,8 @@ make uninstall
   progressbar=true,
   sectionpage=true,
   darkmode=false,
-  serif=true
+  serif=true,
+  language=en
 ]{gdue}
 ```
 
@@ -181,6 +200,33 @@ make uninstall
 - `sectionpage=true|false`：是否在每个 section 开头插入目录过渡页，默认 `true`。
 - `darkmode=true|false`：是否启用深色主题配色，默认 `false`。
 - `serif=true|false`：是否启用衬线字体主题，默认 `true`。
+- `language=en|zh`：文档语言支持，默认 `en`；设置为 `zh` 后启用中文内容支持。
+
+### Language Support
+
+默认情况下，主题按英文文档工作；下面两种写法等价：
+
+```tex
+\usetheme{gdue}
+% or
+\usetheme[language=en]{gdue}
+```
+
+如果你的幻灯片正文、标题或目录里需要中文，请切换到中文模式：
+
+```tex
+\usetheme[
+  progressbar=true,
+  sectionpage=true,
+  language=zh
+]{gdue}
+```
+
+说明：
+
+- `language=zh` 会在主题内部加载中文支持，不需要你再额外写 `\usepackage{ctex}`。
+- 仓库里的 `make main` 和 `make demo` 默认已经使用 `XeLaTeX`，英文和中文都用同一条命令编译。
+- 英文仍然是默认行为；如果你的内容全是英文，保持 `\usetheme{gdue}` 即可。
 
 ### Asset Customization
 
@@ -241,8 +287,8 @@ print("Hello, GDUE")
 
 ## Acknowledgements
 
-- [matze/mtheme](https://github.com/matze/mtheme)
-- [wurahara/PolyU-Beamer-Slides](https://github.com/wurahara/PolyU-Beamer-Slides)
+- 项目仓库结构及 CI Action 参考自 [matze/mtheme](https://github.com/matze/mtheme)
+- Beamer slide 设计参考自 [wurahara/PolyU-Beamer-Slides](https://github.com/wurahara/PolyU-Beamer-Slides)
 
 ## License
 
