@@ -2,6 +2,7 @@
 \ProvidesPackage{beamerthemegdue}[2026/03/25 v1.0.0 GDUE Beamer theme]
 
 \RequirePackage{etoolbox}
+\RequirePackage{iftex}
 \RequirePackage{tikz}
 \RequirePackage{xcolor}
 \RequirePackage{listings}
@@ -16,6 +17,7 @@
 \newif\ifgdue@sectionpage
 \newif\ifgdue@serif
 \newif\ifgdue@darkmode
+\newcommand{\gdue@language}{en}
 
 \gdue@progressbartrue
 \gdue@sectionpagetrue
@@ -34,7 +36,31 @@
 \DeclareOptionBeamer{sectionpage}[true]{\gdue@setbool{sectionpage}{#1}}
 \DeclareOptionBeamer{serif}[true]{\gdue@setbool{serif}{#1}}
 \DeclareOptionBeamer{darkmode}[false]{\gdue@setbool{darkmode}{#1}}
+\DeclareOptionBeamer{language}[en]{\renewcommand{\gdue@language}{#1}}
 \ProcessOptionsBeamer
+
+\newcommand{\gdue@iflanguage}[3]{%
+  \expandafter\ifstrequal\expandafter{\gdue@language}{#1}{#2}{#3}%
+}
+
+\gdue@iflanguage{en}{}{%
+  \gdue@iflanguage{zh}{%
+    \ifPDFTeX
+      \PackageError{beamerthemegdue}{Option 'language=zh' requires XeLaTeX or LuaLaTeX}{Use latexmk -xelatex, xelatex, or lualatex when compiling Chinese documents.}%
+    \fi
+    \RequirePackage[UTF8,fontset=fandol]{ctex}%
+  }{%
+    \gdue@iflanguage{cn}{%
+      \ifPDFTeX
+        \PackageError{beamerthemegdue}{Option 'language=cn' requires XeLaTeX or LuaLaTeX}{Use latexmk -xelatex, xelatex, or lualatex when compiling Chinese documents.}%
+      \fi
+      \RequirePackage[UTF8,fontset=fandol]{ctex}%
+    }{%
+      \PackageWarning{beamerthemegdue}{Unknown value '\gdue@language' for option 'language'. Falling back to English defaults}%
+      \renewcommand{\gdue@language}{en}%
+    }%
+  }%
+}
 
 % ------------------------------------------------------------------------------
 % Public customization hooks

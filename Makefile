@@ -1,7 +1,7 @@
 SHELL := /bin/bash
 
 LATEXMK ?= latexmk
-LATEX_FLAGS := -pdf -interaction=nonstopmode -halt-on-error -file-line-error
+LATEX_FLAGS := -xelatex -interaction=nonstopmode -halt-on-error -file-line-error
 
 MAIN_TEX := main.tex
 DEMO_TEX := demo/demo.tex
